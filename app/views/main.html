@@ -1,6 +1,5 @@
-<h1>Expense calculator</h1>
-
 <div class="container">
+  <h2>Your monthly expenses</h2>
 
   <!-- Model wrapper -->
   <div ui-sortable ng-model="expenses">
@@ -8,12 +7,14 @@
     <div class="row expense-row" ng-repeat="expense in expenses">
       <div class="form-group">
         <div class="col-sm-5">
-          <input type="text" class="form-control" ng-model="expense">
+          <input type="text" class="form-control" ng-model="expense.name">
         </div>
         <div class="col-sm-5">
           <div class="input-group">
-            <input type="text" class="form-control" ng-model="expense">
+            <input type="text" class="form-control" ng-model="expense.value">
+            <span class="input-group-addon">zł</span>
           </div>
+        </div>
         <div class="col-sm-2">
           <button class="btn btn-danger" ng-click="removeExpense($index)" aria-label="Remove">X</button>
         </div>
@@ -24,14 +25,34 @@
   <!-- / Model wrapper -->
 
   <form role="form" ng-submit="addExpense()">
-    <div class="row">
-      <div class="input-group">
-        <input type="text" ng-model="expense" placeholder="Expense name" class="form-control">
-        <span class="input-group-btn">
-          <input type="submit" class="btn btn-primary" value="Add">
-        </span>
+    <div class="row add-expense-row">
+
+      <div class="col-sm-5">
+        <input type="text" ng-model="expense.name" placeholder="Expense name" class="form-control">
+      </div>
+
+      <div class="col-sm-5">
+        <div class="input-group">
+          <input type="text" class="form-control" ng-model="expense.value" placeholder="Cost">
+          <span class="input-group-addon">zł</span>
+        </div>
+      </div>
+
+      <div class="col-sm-2">
+        <input type="submit" class="btn btn-primary" value="Add">
       </div>
     </div>
   </form>
+
+  <h2>Your rates</h2>
+  <h3>
+    <span class="glyphicon glyphicon-exclamation-sign"></span>
+      Minimal rate
+  </h3>
+  <div class="row">
+    <div class="col-sm-2">Yearly</div>
+    <div class="col-sm-2">{{rate.minimal.yearly}}</div>
+  </div>
 </div>
+
 
