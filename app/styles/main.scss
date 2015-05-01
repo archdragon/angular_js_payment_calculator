@@ -3,9 +3,18 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+.add-expense-row,
 .expense-row {
   margin-bottom: 20px;
   margin-left: 5px;
-  border-left: 15px solid #ddd;
+  border-left: 15px solid $gray-lighter;
+}
+
+
+.add-expense-row {
+  border-color: $brand-primary;
+}
+
+.expense-row {
   cursor: move;
 }
