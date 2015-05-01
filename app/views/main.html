@@ -37,22 +37,51 @@
           <span class="input-group-addon">zł</span>
         </div>
       </div>
-
+ 
       <div class="col-sm-2">
         <input type="submit" class="btn btn-primary" value="Add">
       </div>
     </div>
   </form>
 
-  <h2>Your rates</h2>
-  <h3>
-    <span class="glyphicon glyphicon-exclamation-sign"></span>
-      Minimal rate
-  </h3>
-  <div class="row">
-    <div class="col-sm-2">Yearly</div>
-    <div class="col-sm-2">{{rate.minimal.yearly}}</div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Your settings
+    </div>
+    <div class="panel-body">
+      <div class="form-group">
+        <label class="from-control col-sm-3">Working days in month:</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" ng-model="settings.workDaysInMonth">
+        </div>
+      </div>
+    </div>
   </div>
+
+  <h2>Your rates</h2>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span class="glyphicon glyphicon-exclamation-sign"></span>
+        Minimal rates
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-2">Yearly</div>
+        <div class="col-sm-2">{{rate.minimal.yearly}}</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">Monthly</div>
+        <div class="col-sm-2">{{rate.minimal.monthly}}</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">Daily</div>
+        <div class="col-sm-2">{{rate.minimal.daily}}</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">Hourly</div>
+        <div class="col-sm-2">{{rate.minimal.hourly}}</div>
+      </div>
+    </div>
 </div>
 
 
