@@ -1,0 +1,37 @@
+<h1>Expense calculator</h1>
+
+<div class="container">
+
+  <!-- Model wrapper -->
+  <div ui-sortable ng-model="expenses">
+
+    <div class="row expense-row" ng-repeat="expense in expenses">
+      <div class="form-group">
+        <div class="col-sm-5">
+          <input type="text" class="form-control" ng-model="expense">
+        </div>
+        <div class="col-sm-5">
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="expense">
+          </div>
+        <div class="col-sm-2">
+          <button class="btn btn-danger" ng-click="removeExpense($index)" aria-label="Remove">X</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- / Model wrapper -->
+
+  <form role="form" ng-submit="addExpense()">
+    <div class="row">
+      <div class="input-group">
+        <input type="text" ng-model="expense" placeholder="Expense name" class="form-control">
+        <span class="input-group-btn">
+          <input type="submit" class="btn btn-primary" value="Add">
+        </span>
+      </div>
+    </div>
+  </form>
+</div>
+
