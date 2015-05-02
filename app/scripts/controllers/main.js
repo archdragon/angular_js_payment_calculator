@@ -9,23 +9,39 @@
  */
 angular.module('payCalculatorApp')
   .controller('MainCtrl', function ($scope) {
-    var rent = {name: 'Rent', value: '2000'};
-    var zus = {name: 'ZUS', value: '1200'};
+    var rent = {name: 'Rent', value: 1000};
+    var bills = {name: 'Bills', value: 200};
+    var healthInsurance = {name: 'Health and insurance', value: 600};
 
+    $scope.showSettings = false;
+    $scope.showRatesDetails = false;
+    $scope.currencySymbol = '$';
     $scope.settings = {
       workDaysInMonth: 20.0,
       workHoursInDay: 8.0
     }
-    $scope.expenses = [rent, zus];
+    $scope.expenses = [rent, bills, healthInsurance];
     $scope.rate = {
       minimal: { yearly: 0,
+                 monthly: 0,
+                 daily: 0,
+                 hourly: 0 },
+      suggested: { yearly: 0,
                  monthly: 0,
                  daily: 0,
                  hourly: 0 }
     };
 
+    $scope.savings = {
+      monthly: 1000
+    };
+
     $scope.$watchCollection('expenses', function(newValue, oldValue) {
-      updateRates();
+      $scope.updateRates();
+    });
+
+    $scope.$watchCollection('savings', function(newValue, oldValue) {
+      $scope.updateRates();
     });
 
     $scope.addExpense = function () {
@@ -37,14 +53,33 @@ angular.module('payCalculatorApp')
       $scope.expenses.splice(index, 1);
     };
 
-    function updateRates() {
-      var workDaysInMonth = 20.0;
-      var workHoursInDay = 8.0;
+    $scope.updateRates = function() {
+      var workDaysInMonth = $scope.settings.workDaysInMonth;
+      var workHoursInDay = $scope.settings.workHoursInDay;
+
       var minimal = $scope.rate.minimal;
+      var suggested = $scope.rate.suggested;
+
       minimal.monthly = totalExpenses();
-      minimal.yearly = totalExpenses() * 12.0;
-      minimal.daily = minimal.monthly / workDaysInMonth;
-      minimal.hourly = minimal.daily / workHoursInDay;
+      minimal = baseRatesOnMonthly(minimal);
+
+      suggested.monthly = minimal.monthly + parseFloat($scope.savings.monthly);
+      // suggested.monthy *= 2.0; // Double it!
+      suggested = baseRatesOnMonthly(suggested);
+    }
+
+    function baseRatesOnMonthly(ratesBase) {
+      var workDaysInMonth = $scope.settings.workDaysInMonth;
+      var workHoursInDay = $scope.settings.workHoursInDay;
+
+      ratesBase.yearly = ratesBase.monthly * 12.0;
+      ratesBase.daily = ratesBase.monthly / workDaysInMonth;
+      ratesBase.hourly = ratesBase.daily / workHoursInDay;
+      return ratesBase;
+    }
+
+    $scope.setSavings = function() {
+      $scope.updateRates();
     }
 
     function totalExpenses() {
