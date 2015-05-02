@@ -1,22 +1,24 @@
 <div class="container">
-  <h2>Your monthly expenses</h2>
+
+
+  <h2><span class="glyphicon glyphicon-home"></span> Your monthly expenses</h2>
 
   <!-- Model wrapper -->
   <div ui-sortable ng-model="expenses">
 
     <div class="row expense-row" ng-repeat="expense in expenses">
       <div class="form-group">
-        <div class="col-sm-5">
+        <div class="col-sm-3">
           <input type="text" class="form-control" ng-model="expense.name">
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-2">
           <div class="input-group">
-            <input type="text" class="form-control" ng-model="expense.value">
-            <span class="input-group-addon">zł</span>
+            <input ng-change="updateRates()" type="text" class="form-control expense-value" ng-model="expense.value">
+            <span class="input-group-addon">{{currencySymbol}}</span>
           </div>
         </div>
         <div class="col-sm-2">
-          <button class="btn btn-danger" ng-click="removeExpense($index)" aria-label="Remove">X</button>
+          <button class="btn btn-default" ng-click="removeExpense($index)" aria-label="Remove">X</button>
         </div>
       </div>
     </div>
@@ -27,14 +29,14 @@
   <form role="form" ng-submit="addExpense()">
     <div class="row add-expense-row">
 
-      <div class="col-sm-5">
+      <div class="col-sm-3">
         <input type="text" ng-model="expense.name" placeholder="Expense name" class="form-control">
       </div>
 
-      <div class="col-sm-5">
+      <div class="col-sm-2">
         <div class="input-group">
-          <input type="text" class="form-control" ng-model="expense.value" placeholder="Cost">
-          <span class="input-group-addon">zł</span>
+          <input type="text" class="form-control expense-value" ng-model="expense.value" placeholder="Cost">
+          <span class="input-group-addon">{{currencySymbol}}</span>
         </div>
       </div>
  
@@ -44,7 +46,43 @@
     </div>
   </form>
 
-  <div class="panel panel-default">
+  <hr>
+
+  <h2><span class="glyphicon glyphicon-piggy-bank"></span> Your savings</h2>
+  <p id="savings" class="controls form-inline">
+    <div class="form-group">
+      I want to save
+      <div class="input-group">
+        <input class="form-control" type="text" ng-model="savings.monthly">
+        <span class="input-group-addon">{{currencySymbol}}</span>
+      </div>
+      per month
+    </div>
+  </p>
+
+  <hr>
+
+
+  <div ng-model="rate" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-briefcase">
+  </span> {{rate.suggested.hourly}}{{currencySymbol}} / hour</div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <button class="btn btn-default" ng-click="showSettings = !showSettings">
+        <span class="glyphicon glyphicon-cog"></span> Settings
+      </button>
+      <button class="btn btn-default" ng-click="showRateDetails = !showRateDetails">
+        <span class="glyphicon glyphicon-stats"></span> Rate details
+      </button>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Settings -->
+  <div class="panel panel-default" class="ng-hide" ng-show="showSettings">
     <div class="panel-heading">
       Your settings
     </div>
@@ -58,28 +96,30 @@
     </div>
   </div>
 
-  <h2>Your rates</h2>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <span class="glyphicon glyphicon-exclamation-sign"></span>
-        Minimal rates
-    </div>
-    <div class="panel-body">
-      <div class="row">
-        <div class="col-sm-2">Yearly</div>
-        <div class="col-sm-2">{{rate.minimal.yearly}}</div>
+
+  <!-- Rate details -->
+    <div class="panel panel-default" class="ng-hide" ng-show="showRateDetails">
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-exclamation-sign"></span>
+          Minimal rates
       </div>
-      <div class="row">
-        <div class="col-sm-2">Monthly</div>
-        <div class="col-sm-2">{{rate.minimal.monthly}}</div>
-      </div>
-      <div class="row">
-        <div class="col-sm-2">Daily</div>
-        <div class="col-sm-2">{{rate.minimal.daily}}</div>
-      </div>
-      <div class="row">
-        <div class="col-sm-2">Hourly</div>
-        <div class="col-sm-2">{{rate.minimal.hourly}}</div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-2">Yearly</div>
+          <div class="col-sm-2">{{rate.minimal.yearly}}</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2">Monthly</div>
+          <div class="col-sm-2">{{rate.minimal.monthly}}</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2">Daily</div>
+          <div class="col-sm-2">{{rate.minimal.daily}}</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2">Hourly</div>
+          <div class="col-sm-2">{{rate.minimal.hourly}}</div>
+        </div>
       </div>
     </div>
 </div>
