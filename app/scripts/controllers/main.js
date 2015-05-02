@@ -9,6 +9,9 @@
  */
 angular.module('payCalculatorApp')
   .controller('MainCtrl', function ($scope) {
+
+    //$scope.$storage = $localStorage;
+
     var rent = {name: 'Rent', value: 1000};
     var bills = {name: 'Bills', value: 200};
     var healthInsurance = {name: 'Health and insurance', value: 600};
@@ -62,14 +65,12 @@ angular.module('payCalculatorApp')
 
       minimal.monthly = totalExpenses();
       minimal = baseRatesOnMonthly(minimal);
-      minimal = formatRates(minimal);
 
       suggested.monthly = minimal.monthly + parseFloat($scope.savings.monthly);
       console.log("Savings: " + parseFloat($scope.savings.monthly));
 
       suggested.monthly = suggested.monthly * 2.0; // Double it!
       suggested = baseRatesOnMonthly(suggested);
-      suggested = formatRates(suggested);
 
       console.log("Suggested monthly: " + suggested.monthly);
     }
@@ -82,19 +83,6 @@ angular.module('payCalculatorApp')
       ratesBase.daily = ratesBase.monthly / workDaysInMonth;
       ratesBase.hourly = ratesBase.daily / workHoursInDay;
       return ratesBase;
-    }
-
-    function formatRates(ratesBase) {
-      ratesBase.yearly = formatPrice(ratesBase.yearly);
-      ratesBase.monthly = formatPrice(ratesBase.monthly);
-      ratesBase.daily = formatPrice(ratesBase.daily);
-      ratesBase.hourly = formatPrice(ratesBase.hourly);
-      return ratesBase;
-    }
-
-    function formatPrice(price) {
-      //return Number(price).toFixed(2);
-      return price;
     }
 
     $scope.setSavings = function() {
